@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon Page</title>
+  <link rel="stylesheet"href="style.css" type="text/css">
+</head>
+<style> body
+{
+  margin: 0;
+  padding :0;
+  font-family: 'poppins' , sans-serif;
+   box-sizing: border-box;
+    
+}
+.container{
+  width:100vm;
+  height: 100vh;
+  background-image: url( coming\ soon.jpg);
+background-position: center;
+background-size: cover;
+padding:   2%;
+}
+.logo{
+  width: 120px; 
+  padding: 20px 0;
+  cursor: pointer;
+}
+.content{
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+  color: white;
+}
+span{
+  color: red;
+}
+.content button{
+  background: transparent;
+  border: 2px solid  white;
+  outline: none;
+ color: white;  
+ padding: 12px 25px;
+ display: flex;
+ align-items: center;
+ margin-top: 30px;
+ cursor: pointer;
+
+}
+.content button img{
+  width:15px;
+  margin-left: 10px;
+}
+.launch{
+  display: flex;
+}
+.launch div{
+  flex-basis: 100px;
+ 
+} 
+.rocket{
+  width:  50px;
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  animation: rocket 7s  infinite;
+}
+@keyframes rocket{
+  0%{
+     bottom: 0;
+    opacity: 0;
+  }
+  
+  100%{
+     bottom:  100%;
+    opacity: 2.9;
+  }
+
+}
+#navbar{
+  width:100vm;
+  height:  100vh;
+  background-image: url( coming\ soon.jpg );
+  background-position: center;
+  background-size: cover;
+  padding:   2%;
+  
+ 
+}
+ a{
+  color:  white;
+  
+  
+}
+button{
+  background: transparent;
+  border: 2px solid  white;
+  outline: none;
+ color: white;  
+ padding: 12px 25px;
+ display: flex;
+ align-items: center;
+ margin-top: 30px;
+ cursor: pointer;
+}
+#h{
+  width:  50px;
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  animation: h 7s  infinite;
+}
+@keyframes  h{
+   
+  25%{
+    bottom: 25%;
+    opacity:0.5 ;
+  }50%{
+    bottom: 50%;
+    opacity:0 .7;
+  } 
+  
+
+  75%{
+    bottom:75% ;
+    opacity:  0.9;
+  }
+}</style>
+<body>
+  <div class="container">
+    <h1 ><span>Team</span>work</h1> 
+    <div class="content">
+      <p>
+        Website is under maintenance
+      </p>
+      <h1>We're <span>launching</span> soon</h1>
+      <div class="launch">
+        <div>
+          <p id="days">00</p>
+          <span>Days</span>
+        </div>
+        <div>
+          <p id="hours">00</p>
+          <span>Hours</span>
+        </div>
+        <div>
+          <p id="minutes">00</p>
+          <span> Minutes</span>
+        </div>
+        <div>
+          <p id="seconds">00</p>
+          <span>Seconds</span>
+          
+         
+        </div> 
+        <img src="rocket.jpg" class="rocket"></img> <h3 id="h"></h3>
+      </div> 
+       
+    </div>
+  </div>
+  <script type="module">
+    import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+
+    const today = dayjs();
+    console.log(today.format('dddd')); // Logs the day of the week
+    document.querySelector('#h').innerHTML = today.format('dddd'); // Show formatted day name
+
+    window.today = today; // Make the object accessible globally (if needed)
+  </script>
+  <script>
+    var countDownDate=new Date(" april 15,2026 00:00:00").getTime();
+var x=setInterval(function(){
+  var now=new Date().getTime();
+  var  distance=countDownDate-now;
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  document.getElementById("days").innerHTML=days;
+  document.getElementById("hours").innerHTML=hours;
+  document.getElementById("minutes").innerHTML=minutes;
+  document.getElementById("seconds").innerHTML=seconds;
+  if(distance<0){
+    clearInterval(x);
+    document.getElementById("days").innerHTML=  "00";
+  document.getElementById(" hours").innerHTML= "00";
+  document.getElementById(" minutes").innerHTML= "00";
+  document.getElementById("seconds").innerHTML= "00";
+  }
+},1000);
+  </script>
+</body>
+</html>
