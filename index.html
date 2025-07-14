@@ -1,11 +1,281 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout Timer</title>
+  <style>
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f0f0f0, #d6d6d6);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #1e1e1e;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    nav button {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4caf50, #9b3db0);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    nav button:hover {
+      background: linear-gradient(135deg, #66bb6a, #43a047);
+    }
+    .spotify {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+    .spotify img {
+      width: 40px;
+      cursor: pointer;
+    }
+    main {
+      padding: 30px 10px;
+    }
+    .video-section {
+      display: none;
+      margin-top: 30px;
+    }
+    iframe {
+      margin-top: 20px;
+      width: 90%;
+      max-width: 640px;
+      height: 360px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .timer-controls {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    .timer-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      min-width: 250px;
+    }
+    .timer-box h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .timer-box input {
+      width: 60px;
+      padding: 5px;
+      font-size: 18px;
+      text-align: center;
+    }
+    .timer-box button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .timer-box button:hover {
+      background-color: #1565c0;
+    }
+    #timerDisplay {
+      font-size: 24px;
+      margin-top: 10px;
+      color: #d32f2f;
+      font-weight: bold;
+    }
+    #quote-section {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #222;
+      color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+      .timer-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      .timer-box input {
+        width: 50px;
+      }
+    }
+  </style>
 </head>
 <body>
-  HI
+  <header>
+    <nav>
+      <button onclick="showWorkout('pushups')">Push Ups</button>
+      <button onclick="showWorkout('pullups')">Pull Ups</button>
+      <button onclick="showWorkout('biceps')">Biceps</button>
+      <button onclick="showWorkout('squats')">Squats</button>
+      <button onclick="showWorkout('planks')">Planks</button>
+    </nav>
+    <div class="spotify">
+      <a href="https://open.spotify.com" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" />
+      </a>
+    </div>
+  </header>
+
+  
+    <section id="quote-section" style="background-color: #222; color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+   
+  <p style="margin: 5px 0 0; font-style: italic;">
+    "The pain you feel today will be the strength you feel tomorrow. Don't count the days—make the days count."
+  </p>
+</section>
+<h1 id="main-title">Welcome to Workout Timer</h1>
+    <p id="main-desc">Select an exercise from the navigation bar to view detailed instructions and start your timer.</p>
+
+    <div id="workout-details" class="video-section">
+      <h2 id="exerciseTitle"></h2>
+      <p id="instruction"></p>
+      <iframe id="exerciseVideo" frameborder="0" allowfullscreen></iframe>
+
+      <div class="timer-controls">
+        <div class="timer-box">
+          <h3>Custom Timer (HH:MM:SS)</h3>
+          <input type="number" id="hours" placeholder="HH" min="0" /> :
+          <input type="number" id="minutes" placeholder="MM" min="0" /> :
+          <input type="number" id="seconds" placeholder="SS" min="0" />
+          <br />
+          <button onclick="startCustomTimer()">Start</button>
+          <div id="timerDisplay">Timer: 0</div>
+        </div>
+
+        <div class="timer-box">
+          <h3>Long Timer (3 mins)</h3>
+          <button onclick="startTimer(180)">Start Long Timer</button>
+        </div>
+
+        <div class="timer-box">
+          <h3>Finish Timer</h3>
+          <button onclick="stopTimer()">Stop</button>
+        </div>
+      </div>
+    </div>
+    <audio id="bellSound" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg" preload="auto"></audio>
+  </main>
+
+  <script>
+    let countdown;
+    const bell = document.getElementById('bellSound');
+
+    const workouts = {
+      pushups: {
+        title: 'Push Ups',
+        video: 'https://www.youtube.com/embed/IODxDxX7oi4',
+        instruction: 'Do 3 sets of 15 reps. Take a 60-second rest between each set.'
+      },
+      pullups: {
+        title: 'Pull Ups',
+        video: 'https://www.youtube.com/embed/eGo4IYlbE5g',
+        instruction: 'Do 3 sets of 10 reps. Take a 90-second rest between sets.'
+      },
+      biceps: {
+        title: 'Biceps',
+        video: 'https://www.youtube.com/embed/ykJmrZ5v0Oo',
+        instruction: 'Do 4 sets of 12 reps. 60 seconds break each set.'
+      },
+      squats: {
+        title: 'Squats',
+        video: 'https://www.youtube.com/embed/aclHkVaku9U',
+        instruction: 'Do 3 sets of 20 reps. Take 60-second rest in between.'
+      },
+      planks: {
+        title: 'Planks',
+        video: 'https://www.youtube.com/embed/pSHjTRCQxIw',
+        instruction: 'Hold for 60 seconds. Do 3 sets with 30-second rest.'
+      }
+    };
+
+    function showWorkout(name) {
+      // Hide quote when navigating to workouts
+      const quote = document.getElementById('quote-section');
+      if (quote) quote.style.display = 'none';
+      const workout = workouts[name];
+      if (!workout) return;
+
+      document.getElementById('exerciseTitle').textContent = workout.title;
+      document.getElementById('exerciseVideo').src = workout.video;
+      document.getElementById('instruction').textContent = workout.instruction;
+
+      document.getElementById('workout-details').style.display = 'block';
+      document.getElementById('main-title').style.display = 'none';
+      document.getElementById('main-desc').style.display = 'none';
+    }
+
+    function startTimer(seconds) {
+      clearInterval(countdown);
+      let timeLeft = seconds;
+      document.getElementById('timerDisplay').textContent = `Timer: ${timeLeft}s`;
+
+      countdown = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timerDisplay').textContent = `Timer: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          document.getElementById('timerDisplay').textContent = 'Timer: 0';
+          bell.play();
+          setTimeout(() => {
+            alert("Time's up! Take action.");
+            bell.pause();
+            bell.currentTime = 0;
+          }, 100);
+        }
+      }, 1000);
+    }
+
+    function startCustomTimer() {
+      const h = parseInt(document.getElementById('hours').value) || 0;
+      const m = parseInt(document.getElementById('minutes').value) || 0;
+      const s = parseInt(document.getElementById('seconds').value) || 0;
+      const totalSeconds = h * 3600 + m * 60 + s;
+      if (totalSeconds <= 0) {
+        alert("Please enter a valid time.");
+        return;
+      }
+      startTimer(totalSeconds);
+    }
+
+    function stopTimer() {
+      clearInterval(countdown);
+      document.getElementById('timerDisplay').textContent = 'Timer: 0';
+      bell.pause();
+      bell.currentTime = 0;
+    }
+  </script>
 </body>
 </html>
